@@ -32,5 +32,17 @@ app.get('/delete/:id',async(req,res)=>{
    let users = await userModel.findByIdAndDelete(req.params.id);
    res.redirect("/read");
 })
+app.get('/edit/:userid', async (req, res) => {
+    let user = await userModel.findById(req.params.userid);
+    res.render("edit", { user });
+});
+
+
+app.post('/update/:userid', async (req, res) => {
+    let { name, email, image } = req.body;
+    await userModel.findByIdAndUpdate(req.params.userid, { name, email, image });
+    res.redirect("/read");
+});
+
 
 app.listen(3000);
